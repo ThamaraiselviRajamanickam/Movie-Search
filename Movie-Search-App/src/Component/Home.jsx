@@ -17,9 +17,9 @@ export default function Home() {
   const [movies, setMovies] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const fetchData = () => {
+  const fetchData = (q) => {
     fetch(
-      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${searchTerm}`
+      `https://api.themoviedb.org/3/search/movie?api_key=${apiKey}&query=${q}`
     )
       .then((res) => res.json())
       .then((data) => {
@@ -34,10 +34,13 @@ export default function Home() {
   useEffect(() => {
     fetchData("a");
   }, []);
-
+  
+  const handleSearch = () => {
+    fetchData(searchTerm);
+  };
   return (
     <>
-      <Input
+     <Input
         type="text"
         placeholder="Search Movie Name"
         value={searchTerm}
@@ -45,7 +48,7 @@ export default function Home() {
         style={{ marginTop: "50px", marginBottom: "20px" ,marginLeft:"150px", marginRight:"35px"}}
         width={700}
       />
-      <Button variant="solid" colorScheme="blue" onClick={fetchData}>
+      <Button variant="solid" colorScheme="blue" onClick={handleSearch}>
         Search
       </Button>
 
